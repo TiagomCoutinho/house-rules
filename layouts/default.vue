@@ -8,8 +8,16 @@ export default {
 </script>
 
 <template>
-    <main>
+    <main class="main-content">
         <MainHeader/>
         <Nuxt/>
     </main>
 </template>
+
+<style lang="scss">
+.main-content {
+    background-color: #0b0922;
+    min-height: 100vh;
+    color: #FFFFFF;
+}
+</style>
