@@ -18,7 +18,12 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "~/assets/reset.css"
   ],
+
+  env: {
+    apiUrl: process.env.API_URL
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -45,6 +50,5 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {}
 }
