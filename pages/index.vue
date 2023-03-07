@@ -35,9 +35,9 @@ export default {
         }
     },
     mounted() {
-        if(!sessionStorage.rulesUserId) {
+        /*if(this.$store.state.currentUser.access_token) {
             this.$router.push({path:'/login/'})
-        }
+        }*/
     }
 }
 </script>

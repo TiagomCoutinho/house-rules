@@ -2,8 +2,8 @@
 export default {
 	name: 'MainHeader',
 	computed: {
-		isUserActive() {
-			return this.$store.getters.GET_EMAIL == true
+		getEmail() {
+			return this.$store.getters['currentUser/GET_EMAIL']
 		}
 	}
 }
@@ -11,10 +11,14 @@ export default {
 
 <template>
 	<header class="gd-container">
-		<h1>House Rules</h1>
-		<div v-if="isUserActive">
-			{{ $store.getters.GET_EMAIL }}
+		<div>House Rules</div>
+		<div v-if="getEmail">
+			{{ getEmail }}
 			<div>Logout</div>
 		</div>
 	</header>
 </template>
+
+<style lang="scss">
+
+</style>
