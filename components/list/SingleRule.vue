@@ -20,9 +20,17 @@ export default {
     components: { FmButton },
     computed: {
         statusMessage() {
-            return this.isActive ? 'Active' : 'Disabled'
+            return this.isActive ? 'Active' : 'Inactive'
         }
-    }
+    },
+    methods: {
+		updateModal() {
+			this.$emit('updateModal', this.id)
+		},
+        deleteModal() {
+			this.$emit('deleteModal', this.id)
+		}
+	},
 }
 </script>
 
@@ -39,8 +47,8 @@ export default {
             </span>
         </div>
         <div class="single-rule__buttons-container">
-            <FmButton theme="action">Update</FmButton>
-            <FmButton theme="alert">Delete</FmButton>
+            <FmButton @click.native="updateModal" theme="action">Update</FmButton>
+            <FmButton @click.native="deleteModal" theme="alert">Delete</FmButton>
         </div>
     </div>
 </template>

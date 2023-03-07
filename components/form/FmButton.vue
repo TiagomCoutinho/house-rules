@@ -43,10 +43,16 @@ export default{
         opacity: 0;
         display: block;
         position: absolute;
+        border-radius: 4px;
     }
     &:hover {
         &::after {
-            opacity: .2;
+            opacity: .15;
+        }
+    }
+    &:active {
+        &::after {
+            opacity: .3;
         }
     }
     &--default {

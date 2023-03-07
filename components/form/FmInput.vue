@@ -1,3 +1,33 @@
+<script>
+export default{
+	name: 'FmInput',
+	props: {
+		name: {
+			type: String,
+			required: true
+		},
+		label: {
+			type: String,
+			default: ''
+		},
+		defaultValue: {
+			type: String,
+			default: ''
+		}
+	},
+	methods: {
+		updateValue(event) {
+			this.$emit('fmInput', event.target.value)
+		}
+	},
+	computed: {
+		getName() {
+			return this.label.toLowerCase().trim().replaceAll(' ','')
+		}
+	},
+}
+</script>
+
 <template>
 	<label class="fm-input">
 		<div
@@ -7,41 +37,19 @@
 		<input
 			class="fm-input__text-field"
 			type="text"
-			:name="name"
-			v-model="model"
+			:name="getName"
+			:value="defaultValue"
+			@input="updateValue"
 		/>
 	</label>
 </template>
-
-<script>
-export default{
-	name: 'FmInput',
-	props: {
-		label: {
-			type: String
-		}
-	},
-	computed: {
-		name() {
-			return this.label.toLowerCase().trim().replaceAll(' ','')
-		},
-		model: {
-			get() {
-				return this.value
-			},
-			set(value) {
-				this.$emit('fmInput', value)
-			}
-		}
-	}
-}
-</script>
 
 <style lang="scss">
 .fm-input {
 	&__label {
 		font-weight: 700;
 		font-size: 16px;
+		display: block;
 	}
 	&__text-field {
 		padding: 8px;
@@ -52,6 +60,7 @@ export default{
 		outline: none;
 		color: #ffffff;
 		height: 38px;
+		width: 100%;
 		&:focus {
 			border-color: #9077ff;
 		}

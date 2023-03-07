@@ -2,6 +2,12 @@ export const state = () => ({
     rulesList: []
 })
 
+export const getters = {
+    GET_RULES(state) {
+        return state.rulesList
+    }
+}
+
 export const mutations = {
     ADD_RULE(state, id, name, isActive) {
         state.rulesList.unshift({
