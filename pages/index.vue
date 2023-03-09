@@ -35,9 +35,7 @@ export default {
         }
     },
     mounted() {
-        /*if(this.$store.state.currentUser.access_token) {
-            this.$router.push({path:'/login/'})
-        }*/
+        
     }
 }
 </script>

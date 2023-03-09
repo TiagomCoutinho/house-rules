@@ -10,6 +10,7 @@ export const mutations = {
         state.email = data.email
     },
     LOGOUT_USER(state) {
+        state.access_token = null
         state.email = null
     }
 }

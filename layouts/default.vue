@@ -1,6 +1,11 @@
 <script>
 import MainHeader from '../components/global/MainHeader.vue';
 
+import Vue from 'vue'
+import CheckSessionId from '../mixins/checkSessionId.js'
+
+Vue.mixin(CheckSessionId)
+
 export default {
     name: "Default",
     components: { MainHeader }
