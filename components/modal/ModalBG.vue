@@ -3,7 +3,7 @@ export default {
     name: 'ModalBG',
     methods: {
 		closeAllModal() {
-			this.$emit('closeAllModal')
+			this.$store.dispatch("houseRules/UPDATE_ACTIVE_MODAL", null);
 		}
 	},
 }

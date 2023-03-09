@@ -5,21 +5,14 @@ import FmInput from '../form/FmInput.vue';
 
 export default {
     name: "UpdateRule",
-    props: {
-        selectedId: {
-            type: String,
-            required: true
-        },
-    },
     data() {
         return {
-            isRuleLoaded: false,
             rule: {
-                id: "",
                 name: "",
                 isActive: true
-            }
-        };
+            },
+            message: null
+        }
     },
     computed: {
         getAccessToken() {
@@ -30,26 +23,26 @@ export default {
         }
     },
     methods: {
-        getSingleRule() {
-            this.$store.dispatch("houseRules/GET_SINGLE_RULE", {
-                id: this.selectedId,
+        updateRule() {
+            this.message = null
+            this.$store.dispatch("houseRules/UPDATE_SINGLE_RULE", {
+                id: this.getCurrentRule.id,
+                name: this.rule.name,
+                isActive: this.rule.isActive,
                 token: this.getAccessToken
             });
-        },
-        updateStatus(value) {
-            this.rule.isActive = value
-        },
-        submitUpdate() {
-            this.$emit('rulesUpdated')
-        },
-        deleteRule() {
-            this.$emit('modalDelete', rule)
         }
     },
     mounted() {
         this.$store.subscribe((mutation) => {
-            if (mutation.type == "houseRules/SET_SINGLE_RULE") {
-                this.isRuleLoaded = true
+            if (mutation.type == "houseRules/SET_CURRENT_RULE") {
+                this.rule.name = this.getCurrentRule.name
+                this.rule.isActive = this.getCurrentRule.isActive
+            }
+        });
+        this.$store.subscribe((mutation) => {
+            if (mutation.type == "houseRules/UPDATE_RULE") {
+                this.message = 'Rule updated'
             }
         });
     },
@@ -62,10 +55,11 @@ export default {
         <div class="update-rule__title">
             Update rule values
         </div>
-        <div class="update-rule__subtitle">
-            ID: {{ selectedId }}
-        </div>
-        <div v-if="isRuleLoaded" class="update-rule__values">
+        <div v-if="getCurrentRule.isLoaded" class="update-rule__values">
+            <div class="update-rule__subtitle">
+                ID:<br/>
+                {{ getCurrentRule.id }}
+            </div>
             <FmInput
                 label="Name"
                 name="Rule Name"
@@ -79,9 +73,10 @@ export default {
             />
         </div>
         <div class="update-rule__values">
-            <FmButton theme="action">Update</FmButton>
+            <FmButton @click.native="updateRule()" theme="action">Update</FmButton>
             <FmButton theme="alert">Delete</FmButton>
         </div>
+        <div class="update-rule__message" v-if="message">{{ message }}</div>
     </div>
 </template>
 
@@ -115,6 +110,17 @@ export default {
         .fm-button {
             flex-grow: 1;
         }
+    }
+    &__message {
+        color: #000000;
+        text-transform: capitalize;
+        margin-top: 12px;
+        width: 135px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 4px 16px;
+        border-radius: 4px;
+        background-color: #42fa70;
     }
 }
 </style>

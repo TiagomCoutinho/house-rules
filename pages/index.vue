@@ -1,37 +1,16 @@
 <script>
 import SearchId from '../components/form/SearchId.vue'
+import RulesList from '../components/list/RulesList.vue';
 import SingleRule from '../components/list/SingleRule.vue'
 import ModalBG from '../components/modal/ModalBG.vue';
 import UpdateRule from '../components/modal/UpdateRule.vue';
 
 export default {
     name: "IndexPage",
-    components: { SearchId, SingleRule, UpdateRule, ModalBG },
-    data() {
-        return {
-            modalStatus: {
-                update: false,
-                delete: false
-            },
-            selectedId: 0
-        }
-    },
+    components: { SearchId, SingleRule, UpdateRule, ModalBG, RulesList },
     computed: {
-        hasModalActive() {
-            return this.modalStatus.update || this.modalStatus.delete
-        }
-    },
-    methods: {
-        closeAllModal() {
-            this.modalStatus = {
-                update: false,
-                delete: false
-            }
-        },
-        updateModal(id) {
-            this.closeAllModal()
-            this.selectedId = id
-            this.modalStatus.update = true
+        currentModal() {
+            return this.$store.getters["houseRules/GET_ACTIVE_MODAL"];
         }
     },
     mounted() {
@@ -43,16 +22,9 @@ export default {
 <template>
     <section class="page-index gd-container">
         <SearchId />
-        <div class="page-index__list">
-            <SingleRule @updateModal="updateModal" name="Nome" id="0"/>
-            <SingleRule @updateModal="updateModal" name="Nome" id="1"/>
-            <SingleRule @updateModal="updateModal" name="Nome" id="2" :is-active="false"/>
-        </div>
-        <UpdateRule
-            v-if="modalStatus.update"
-            :selected-id="selectedId"
-        />
-        <ModalBG @closeAllModal="closeAllModal" v-if="hasModalActive"/>
+        <RulesList/>
+        <UpdateRule v-if="currentModal == 'update'"/>
+        <ModalBG v-if="currentModal"/>
     </section>
 </template>
 

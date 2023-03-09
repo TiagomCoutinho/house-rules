@@ -5,7 +5,7 @@ export default {
     name: "SingleRule",
     props: {
         id: {
-            type: String,
+            type: Number,
             required: true
         },
         name: {
