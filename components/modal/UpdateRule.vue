@@ -9,24 +9,32 @@ export default {
         selectedId: {
             type: String,
             required: true
-        }
+        },
     },
     data() {
         return {
-            defaultValues: {
-                name: "A name",
-                isActive: true
-            },
+            isRuleLoaded: false,
             rule: {
-                id: "0",
-                name: "A name",
+                id: "",
+                name: "",
                 isActive: true
             }
         };
     },
+    computed: {
+        getAccessToken() {
+            return this.$store.getters["currentUser/GET_ACCESS_TOKEN"];
+        },
+        getCurrentRule() {
+            return this.$store.getters['houseRules/GET_CURRENT_RULE'];
+        }
+    },
     methods: {
-        updateName(value) {
-            this.rule.name = value.trim()
+        getSingleRule() {
+            this.$store.dispatch("houseRules/GET_SINGLE_RULE", {
+                id: this.selectedId,
+                token: this.getAccessToken
+            });
         },
         updateStatus(value) {
             this.rule.isActive = value
@@ -37,6 +45,13 @@ export default {
         deleteRule() {
             this.$emit('modalDelete', rule)
         }
+    },
+    mounted() {
+        this.$store.subscribe((mutation) => {
+            if (mutation.type == "houseRules/SET_SINGLE_RULE") {
+                this.isRuleLoaded = true
+            }
+        });
     },
     components: { FmInput, FmCheckbox, FmButton }
 }
@@ -50,17 +65,17 @@ export default {
         <div class="update-rule__subtitle">
             ID: {{ selectedId }}
         </div>
-        <div class="update-rule__values">
+        <div v-if="isRuleLoaded" class="update-rule__values">
             <FmInput
                 label="Name"
                 name="Rule Name"
-                :defaultValue="defaultValues.name"
-                @fmInput="updateName"
+                :defaultValue="getCurrentRule.name"
+                v-model.trim="rule.name"
             />
             <FmCheckbox
                 label="Is active"
-                :defaultValue="false"
-                @fmInput="updateStatus"
+                :defaultValue="getCurrentRule.isActive"
+                v-model="rule.isActive"
             />
         </div>
         <div class="update-rule__values">

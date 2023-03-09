@@ -13,11 +13,15 @@ export default{
 		defaultValue: {
 			type: String,
 			default: ''
+		},
+		type: {
+			type: String,
+			default: 'text'
 		}
 	},
 	methods: {
 		updateValue(event) {
-			this.$emit('fmInput', event.target.value)
+			this.$emit('input', event.target.value)
 		}
 	},
 	computed: {
@@ -36,7 +40,7 @@ export default{
 		>{{ label }}</div>
 		<input
 			class="fm-input__text-field"
-			type="text"
+			:type="type"
 			:name="getName"
 			:value="defaultValue"
 			@input="updateValue"

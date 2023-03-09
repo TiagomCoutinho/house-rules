@@ -19,7 +19,7 @@ export default{
 	methods: {
 		updateValue() {
             this.currentValue = !this.currentValue
-			this.$emit('fmInput', this.currentValue)
+			this.$emit('input', this.currentValue)
 		}
 	},
     mounted() {
